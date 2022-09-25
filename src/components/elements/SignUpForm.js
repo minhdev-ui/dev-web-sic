@@ -9,15 +9,16 @@ import CountDown from "../../utils/CountDown";
 import { SectionProps } from "../../utils/SectionProps";
 import {
   basicQues,
-  chooseQues, infoContact,
-  textMainBase
+  chooseQues,
+  infoContact,
+  textMainBase,
 } from "../sections/signUpForm/signUpFormQues";
 import "./../../assets/css/style.css";
 import createNotification from "./Nofication";
 // import db from "../../db.config";
 import emailjs from "@emailjs/browser";
 import axios from "axios";
-import config from '../../db.config';
+import config from "../../db.config";
 import DateTime from "./Date";
 const propTypes = {
   ...SectionProps.types,
@@ -72,18 +73,43 @@ const SignUpForm = ({
   const [statusConn, setStatusConn] = useState(null);
   const [disabled, setDisabled] = useState(false);
 
-  useMemo(() => setDisabled(dateData.isTimeOut), [dateData.isTimeOut])
+  useMemo(() => setDisabled(dateData.isTimeOut), [dateData.isTimeOut]);
 
   const handleSubmit = async (obj) => {
-    axios.post(`${config.API_URL}/api/ctv/add`, obj)
-    .then(createNotification('success', {message: 'Cảm ơn bạn đã đăng ký CTV :3', duration: 2, placement: 'bottomRight'}))
-    .catch((err) => {
-      createNotification('error', {message: 'Lỗi Đăng Ký!', duration: 2, placement: 'bottomRight'})
-      console.log(err);
-    })
+    axios
+      .post(`${config.API_URL}/api/ctv/add`, obj)
+      .then(
+        createNotification("success", {
+          message: "Cảm ơn bạn đã đăng ký CTV :3",
+          duration: 2,
+          placement: "bottomRight",
+        })
+      )
+      .catch((err) => {
+        createNotification("error", {
+          message: "Lỗi Đăng Ký!",
+          duration: 2,
+          placement: "bottomRight",
+        });
+        console.log(err);
+      });
   };
 
-  
+  const checkEmail = (email) => {
+    // let checked;
+    const response = axios.get(`${config.API_URL}/api/ctv`, {
+      params: { email: email },
+    });
+    response.then((res) => {
+      if(res.data.email){
+        return false;
+      }else {
+        return true;
+      }
+    });
+    // return checked;
+  };
+
   useEffect(() => {
     // getData()
   }, []);
@@ -115,7 +141,6 @@ const SignUpForm = ({
           <div className="signUpForm--left flex-col">
             <div className="flex-child">
               {textMainBase.title}
-
               <p>
                 Hãy điền đầy đủ thông tin dưới đây để chúng mình có thể liên lạc
                 với bạn trong khoảng thời gian sớm nhất nhé!
@@ -136,7 +161,7 @@ const SignUpForm = ({
               </div>
             </div>
             <div className="signUpForm__footer flex-child">
-              <DateTime time={dayOut}/>
+              <DateTime time={dayOut} />
             </div>
           </div>
           <div className="signUpForm--right flex-col">
@@ -163,10 +188,18 @@ const SignUpForm = ({
                   .min(1, "Vui Lòng Chọn Trường Này"),
               })}
               onSubmit={(values) => {
-                handleSubmit(values).then(() => sendEmail(values))
+                if(checkEmail(values.email)){
+                  handleSubmit(values)
+                  .then(() => sendEmail(values))
+                }else {
+                  createNotification("error", {
+                    message: "Email này đã được đăng ký!",
+                    duration: 2,
+                    placement: "bottomRight",
+                  })
+                }
                 props.stateFunc();
               }}
-              
             >
               {({ errors, touched }) => {
                 return (
