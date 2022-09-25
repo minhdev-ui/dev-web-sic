@@ -47,7 +47,7 @@ const ArticleDetail = ({ type }) => {
             <div className="article-left">
               <img src={image} alt="" />
               <p>
-                <Markup content={text} />
+                <Markup content={text} className='text-article' />
               </p>
               {tags && (
                 <div className="article-tags">
