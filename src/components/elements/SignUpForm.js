@@ -101,10 +101,10 @@ const SignUpForm = ({
       params: { email: email },
     });
     response.then((res) => {
-      if(res.data.email){
-        return false;
+      if(res.data === []){
+        return true
       }else {
-        return true;
+        return false
       }
     });
     // return checked;
@@ -188,16 +188,16 @@ const SignUpForm = ({
                   .min(1, "Vui Lòng Chọn Trường Này"),
               })}
               onSubmit={(values) => {
-                if(checkEmail(values.email)){
+                // if(checkEmail(values.email)){
                   handleSubmit(values)
                   .then(() => sendEmail(values))
-                }else {
-                  createNotification("error", {
-                    message: "Email này đã được đăng ký!",
-                    duration: 2,
-                    placement: "bottomRight",
-                  })
-                }
+                // }else {
+                //   createNotification("error", {
+                //     message: "Email này đã được đăng ký!",
+                //     duration: 2,
+                //     placement: "bottomRight",
+                //   })
+                // }
                 props.stateFunc();
               }}
             >
