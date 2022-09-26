@@ -49,6 +49,15 @@
   }
 }
 
+.text-article {
+  span{
+    color: #ccc !important;
+  }
+  a{
+    color: #6163ff !important;
+  }
+}
+
 @media screen and (max-width: 800px) {
   .grid-3 {
     display: flex;

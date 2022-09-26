@@ -11,7 +11,7 @@ import {
   basicQues,
   chooseQues,
   infoContact,
-  textMainBase,
+  textMainBase
 } from "../sections/signUpForm/signUpFormQues";
 import "./../../assets/css/style.css";
 import createNotification from "./Nofication";
@@ -69,8 +69,6 @@ const SignUpForm = ({
     "T00:00:00";
   const dateData = CountDown(dayOut);
   const innerClasses = classNames("signUpForm-inner");
-  const [data, setData] = useState([]);
-  const [statusConn, setStatusConn] = useState(null);
   const [disabled, setDisabled] = useState(false);
 
   useMemo(() => setDisabled(dateData.isTimeOut), [dateData.isTimeOut]);
@@ -95,24 +93,22 @@ const SignUpForm = ({
       });
   };
 
-  const checkEmail = (email) => {
-    // let checked;
-    const response = axios.get(`${config.API_URL}/api/ctv`, {
-      params: { email: email },
-    });
-    response.then((res) => {
-      if(res.data.email){
-        return false;
-      }else {
-        return true;
+  const handleSignUp = async (values) => {
+    axios.get(`${config.API_URL}/api/ctv`).then((res) => {
+      if (
+        res.data.find((item) => item.email.toString() === values.email) !== undefined
+      ) {
+        createNotification("error", {
+          message: "Email này đã được đăng ký!",
+          duration: 2,
+          placement: "bottomRight",
+        });
+      } else {
+        handleSubmit(values)
+        .then(() => sendEmail(values));
       }
     });
-    // return checked;
   };
-
-  useEffect(() => {
-    // getData()
-  }, []);
 
   const sendEmail = (values) => {
     emailjs.send("gmail", "template_ol8vwc6", values, "iaJ4LMteT5H4R1l9d").then(
@@ -174,6 +170,7 @@ const SignUpForm = ({
                 class: "",
                 answer: [],
                 message: "",
+                isDeleted: false,
               }}
               validationSchema={Yup.object({
                 masv: Yup.string().required("Vui Lòng Điền Trường Này"),
@@ -188,16 +185,7 @@ const SignUpForm = ({
                   .min(1, "Vui Lòng Chọn Trường Này"),
               })}
               onSubmit={(values) => {
-                if(checkEmail(values.email)){
-                  handleSubmit(values)
-                  .then(() => sendEmail(values))
-                }else {
-                  createNotification("error", {
-                    message: "Email này đã được đăng ký!",
-                    duration: 2,
-                    placement: "bottomRight",
-                  })
-                }
+                handleSignUp(values)
                 props.stateFunc();
               }}
             >
