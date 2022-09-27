@@ -76,12 +76,21 @@ const SignUpForm = ({
   const handleSubmit = async (obj) => {
     axios
       .post(`${config.API_URL}/api/ctv/add`, obj)
-      .then(
-        createNotification("success", {
-          message: "Cảm ơn bạn đã đăng ký CTV :3",
-          duration: 2,
-          placement: "bottomRight",
-        })
+      .then((res) => {
+        if(res.status === 200) {
+          createNotification("success", {
+            message: "Cảm ơn bạn đã đăng ký CTV :3",
+            duration: 2,
+            placement: "bottomRight",
+          })
+        }else {
+          createNotification("error", {
+            message: "Lỗi Mạng",
+            duration: 2,
+            placement: 'bottomRight',
+          })
+        }
+      }
       )
       .catch((err) => {
         createNotification("error", {
