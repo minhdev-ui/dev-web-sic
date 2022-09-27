@@ -1,9 +1,9 @@
 import React from "react";
 import Slide from "../elements/Slider";
-import ban_hoc_tap from "../../assets/images/ban-preview/ban_hoc_tap.svg"
-import ban_ho_tro from "../../assets/images/ban-preview/ban_ho_tro.svg"
-import ban_ky_thuat from "../../assets/images/ban-preview/ban_ky_thuat.svg"
-import ban_truyen_thong from "../../assets/images/ban-preview/ban_truyen_thong.svg"
+import ban_hoc_tap from "../../assets/images/ban-preview/ban_hoc_tap.png"
+import ban_ho_tro from "../../assets/images/ban-preview/ban_ho_tro.png"
+import ban_ky_thuat from "../../assets/images/ban-preview/ban_ky_thuat.png"
+import ban_truyen_thong from "../../assets/images/ban-preview/ban_truyen_thong.png"
 
 const Ban = () => {
   const options = {

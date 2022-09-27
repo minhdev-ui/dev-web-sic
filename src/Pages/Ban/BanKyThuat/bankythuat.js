@@ -1,8 +1,8 @@
-import hocTap1 from "../../../assets/images/HoTro/1.jpeg";
-import hocTap2 from "../../../assets/images/HoTro/2.jpeg";
-import hocTap3 from "../../../assets/images/HoTro/3.jpeg";
-import hocTap4 from "../../../assets/images/HoTro/4.jpeg";
-import hocTap5 from "../../../assets/images/HoTro/5.jpeg";
+import kythuat1 from "../../../assets/images/KyThuat/1.png";
+import kythuat2 from "../../../assets/images/KyThuat/2.png";
+import kythuat3 from "../../../assets/images/KyThuat/3.png";
+import kythuat4 from "../../../assets/images/KyThuat/4.png";
+import kythuat5 from "../../../assets/images/KyThuat/5.png";
 const banKyThuat = {
   title: "Ban",
   name: "Kỹ Thuật",
@@ -10,7 +10,7 @@ const banKyThuat = {
     "Bấm đăng kí để có cơ hội trở thành thành viên của ban kỹ thuật nhé",
   clb: "student informatic club",
   btn: "Đăng kí CTV",
-  imagesIntro: [hocTap1, hocTap2, hocTap3, hocTap4, hocTap5],
+  imagesIntro: [kythuat1, kythuat2, kythuat3, kythuat4, kythuat5],
   mission: [
     `Hỗ trợ sinh viên, thầy cô trong việc lặp đặt và sửa chữa vấn đề phát sinh trong việc sử dụng máy tính`,
     `Tổ chức các sự kiện sửa máy tính, vệ sinh laptop miễn phí`,

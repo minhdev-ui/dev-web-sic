@@ -1,8 +1,8 @@
-import hocTap1 from "../../../assets/images/HoTro/1.jpeg";
-import hocTap2 from "../../../assets/images/HoTro/2.jpeg";
-import hocTap3 from "../../../assets/images/HoTro/3.jpeg";
-import hocTap4 from "../../../assets/images/HoTro/4.jpeg";
-import hocTap5 from "../../../assets/images/HoTro/5.jpeg";
+import hocTap1 from "../../../assets/images/HocTap/1.png";
+import hocTap2 from "../../../assets/images/HocTap/2.png";
+import hocTap3 from "../../../assets/images/HocTap/3.png";
+import hocTap4 from "../../../assets/images/HocTap/4.png";
+import hocTap5 from "../../../assets/images/HocTap/5.png";
 const BanHocTap = {
   title: "Ban",
   name: "Học Tập",
