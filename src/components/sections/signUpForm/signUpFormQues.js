@@ -43,6 +43,11 @@ const infoContact = [
     quesExample: "0123456789",
   },
   {
+    quesName: "date",
+    quesTitle: "Ngày Sinh",
+    quesExample: "01/01/2000",
+  },
+  {
     quesName: "email",
     quesTitle: "Email",
     quesExample: "example@gmail.com",
@@ -52,6 +57,11 @@ const infoContact = [
     quesTitle: "Lớp",
     quesExample: "63CNTT01",
   },
+  {
+    quesName: "facebook",
+    quesTitle: "Facebook Link",
+    quesExample: "",
+  },
 ];
 
 const chooseQues = {
@@ -59,4 +69,10 @@ const chooseQues = {
   quesName: "answer",
   ans: ["Ban truyền thông", "Ban học tập", "Ban kỹ thuật", "Ban hỗ trợ"],
 };
-export { infoContact, textMainBase, basicQues, chooseQues };
+
+const chooseOption = {
+  quesTitle: 'Giới Tính',
+  quesName: 'gender',
+  ans: ["Nam", "Nữ"],
+}
+export { infoContact, textMainBase, basicQues, chooseQues, chooseOption };

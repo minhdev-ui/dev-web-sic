@@ -9,6 +9,7 @@ import CountDown from "../../utils/CountDown";
 import { SectionProps } from "../../utils/SectionProps";
 import {
   basicQues,
+  chooseOption,
   chooseQues,
   infoContact,
   textMainBase
@@ -179,11 +180,14 @@ const SignUpForm = ({
                 class: "",
                 answer: [],
                 message: "",
+                facebook: "",
+                date: "",
                 isDeleted: false,
               }}
               validationSchema={Yup.object({
                 masv: Yup.string().required("Vui Lòng Điền Trường Này"),
                 fullName: Yup.string().required("Vui Lòng Điền Trường Này"),
+                date: Yup.string().required("Vui Lòng Nhập Trường Này"),
                 phone: Yup.string().required("Vui Lòng Điền Trường Này"),
                 email: Yup.string()
                   .email("E-mail của bạn không hợp lệ")
@@ -192,6 +196,7 @@ const SignUpForm = ({
                 answer: Yup.array()
                   .required()
                   .min(1, "Vui Lòng Chọn Trường Này"),
+                facebook: Yup.string().required("Vui Lòng Điền Trường Này")
               })}
               onSubmit={(values) => {
                 handleSignUp(values)
@@ -222,6 +227,38 @@ const SignUpForm = ({
                           )}
                         </div>
                       ))}
+                    </div>
+                    <div
+                      className="choose-info flex-child"
+                      role="group"
+                      aria-labelledby="radio-group"
+                      style={{
+                        width: '20%'
+                      }}
+                    >
+                      <label htmlFor={chooseOption.quesName} className="title">
+                        {chooseOption.quesTitle}
+                      </label>
+                      <div className="gridCol-2">
+                        {chooseOption.ans.map((item) => (
+                          <label style={{ color: "#000" }} key={item}>
+                            <Field
+                              type="radio"
+                              name={chooseOption.quesName}
+                              value={item}
+                              style={{
+                                marginRight: '5px'
+                              }}
+                            />
+                            {item}
+                          </label>
+                        ))}
+                      </div>
+                      {errors.answer && touched.answer ? (
+                        <span className="errorMessage">{errors.answer}</span>
+                      ) : (
+                        ""
+                      )}
                     </div>
                     <div
                       className="choose-info flex-child"
