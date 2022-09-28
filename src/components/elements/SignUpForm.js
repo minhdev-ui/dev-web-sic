@@ -21,6 +21,7 @@ import emailjs from "@emailjs/browser";
 import axios from "axios";
 import config from "../../db.config";
 import DateTime from "./Date";
+import toast from "react-hot-toast";
 const propTypes = {
   ...SectionProps.types,
   status: PropTypes.bool,
@@ -75,7 +76,7 @@ const SignUpForm = ({
   useMemo(() => setDisabled(dateData.isTimeOut), [dateData.isTimeOut]);
 
   const handleSubmit = async (obj) => {
-    axios
+    toast.promise(axios
       .post(`${config.API_URL}/api/ctv/add`, obj)
       .then((res) => {
         if(res.status === 200) {
@@ -100,7 +101,12 @@ const SignUpForm = ({
           placement: "bottomRight",
         });
         console.log(err);
-      });
+      }), {
+        loading: 'Đang Xử Lý...',
+        success: 'Xử Lý Thành Công',
+        error: 'Lỗi Trong Quá Trình Xử Lý',
+      })
+    
   };
 
   const handleSignUp = async (values) => {
