@@ -12,7 +12,7 @@ import {
   chooseOption,
   chooseQues,
   infoContact,
-  textMainBase
+  textMainBase,
 } from "../sections/signUpForm/signUpFormQues";
 import "./../../assets/css/style.css";
 import createNotification from "./Nofication";
@@ -76,43 +76,45 @@ const SignUpForm = ({
   useMemo(() => setDisabled(dateData.isTimeOut), [dateData.isTimeOut]);
 
   const handleSubmit = async (obj) => {
-    toast.promise(axios
-      .post(`${config.API_URL}/api/ctv/add`, obj)
-      .then((res) => {
-        if(res.status === 200) {
-          createNotification("success", {
-            message: "Cảm ơn bạn đã đăng ký CTV :3",
+    toast.promise(
+      axios
+        .post(`${config.API_URL}/api/ctv/add`, obj)
+        .then((res) => {
+          if (res.status === 200) {
+            createNotification("success", {
+              message: "Cảm ơn bạn đã đăng ký CTV :3",
+              duration: 2,
+              placement: "bottomRight",
+            });
+          } else {
+            createNotification("error", {
+              message: "Lỗi Mạng",
+              duration: 2,
+              placement: "bottomRight",
+            });
+          }
+        })
+        .catch((err) => {
+          createNotification("error", {
+            message: "Lỗi Đăng Ký!",
             duration: 2,
             placement: "bottomRight",
-          })
-        }else {
-          createNotification("error", {
-            message: "Lỗi Mạng",
-            duration: 2,
-            placement: 'bottomRight',
-          })
-        }
+          });
+          console.log(err);
+        }),
+      {
+        loading: "Đang Xử Lý...",
+        success: "Xử Lý Thành Công",
+        error: "Lỗi Trong Quá Trình Xử Lý",
       }
-      )
-      .catch((err) => {
-        createNotification("error", {
-          message: "Lỗi Đăng Ký!",
-          duration: 2,
-          placement: "bottomRight",
-        });
-        console.log(err);
-      }), {
-        loading: 'Đang Xử Lý...',
-        success: 'Xử Lý Thành Công',
-        error: 'Lỗi Trong Quá Trình Xử Lý',
-      })
-    
+    );
   };
 
   const handleSignUp = async (values) => {
     axios.get(`${config.API_URL}/api/ctv`).then((res) => {
       if (
-        res.data.find((item) => item.email.toString() === values.email) !== undefined
+        res.data.find((item) => item.email.toString() === values.email) !==
+        undefined
       ) {
         createNotification("error", {
           message: "Email này đã được đăng ký!",
@@ -120,8 +122,7 @@ const SignUpForm = ({
           placement: "bottomRight",
         });
       } else {
-        handleSubmit(values)
-        .then(() => sendEmail(values));
+        handleSubmit(values).then(() => sendEmail(values));
       }
     });
   };
@@ -185,6 +186,7 @@ const SignUpForm = ({
                 email: "",
                 class: "",
                 answer: [],
+                gender: "",
                 message: "",
                 facebook: "",
                 date: "",
@@ -201,8 +203,11 @@ const SignUpForm = ({
                 class: Yup.string().required("Vui Lòng Điền Trường Này"),
                 answer: Yup.array()
                   .required()
-                  .min(1, "Vui Lòng Chọn Trường Này"),
-                facebook: Yup.string().required("Vui Lòng Điền Trường Này")
+                  .min(1, "Vui Lòng Chọn Trường Này")
+                  .max(2, "Chỉ chọn tối đa 2 ban"),
+                gender: Yup.string()
+                  .required("Vui Lòng Chọn Trường Này"),
+                facebook: Yup.string().required("Vui Lòng Điền Trường Này"),
               })}
               onSubmit={(values) => {
                 handleSignUp(values)
@@ -238,14 +243,11 @@ const SignUpForm = ({
                       className="choose-info flex-child"
                       role="group"
                       aria-labelledby="radio-group"
-                      style={{
-                        width: '20%'
-                      }}
                     >
                       <label htmlFor={chooseOption.quesName} className="title">
                         {chooseOption.quesTitle}
                       </label>
-                      <div className="gridCol-2">
+                      <div style={{ display: 'flex', gap: '10px' }}>
                         {chooseOption.ans.map((item) => (
                           <label style={{ color: "#000" }} key={item}>
                             <Field
@@ -253,15 +255,15 @@ const SignUpForm = ({
                               name={chooseOption.quesName}
                               value={item}
                               style={{
-                                marginRight: '5px'
+                                marginRight: "5px",
                               }}
                             />
                             {item}
                           </label>
                         ))}
                       </div>
-                      {errors.answer && touched.answer ? (
-                        <span className="errorMessage">{errors.answer}</span>
+                      {errors.gender && touched.gender ? (
+                        <span className="errorMessage" style={{width: '100%'}}>{errors.gender}</span>
                       ) : (
                         ""
                       )}
@@ -285,12 +287,12 @@ const SignUpForm = ({
                             {item}
                           </label>
                         ))}
+                        {errors.answer && touched.answer ? (
+                          <span className="errorMessage">{errors.answer}</span>
+                        ) : (
+                          ""
+                        )}
                       </div>
-                      {errors.answer && touched.answer ? (
-                        <span className="errorMessage">{errors.answer}</span>
-                      ) : (
-                        ""
-                      )}
                     </div>
                     <div className="message flex-col">
                       <label className="title flex-child">
