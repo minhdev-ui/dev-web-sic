@@ -7,6 +7,9 @@ const textMainBase = {
     dayEnd: '10',
     monthEnd: '10',
     yearEnd: '2022',
+    hourEnd: '20',
+    miniteEnd: '00',
+    secondEnd: '00',
     messageTitle: 'Mong muốn của bạn khi vào CLB'
 }
 const infoContact = [

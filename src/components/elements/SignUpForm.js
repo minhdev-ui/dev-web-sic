@@ -68,7 +68,7 @@ const SignUpForm = ({
     textMainBase.monthEnd +
     "-" +
     textMainBase.dayEnd +
-    "T00:00:00";
+    `T${textMainBase.hourEnd}:${textMainBase.miniteEnd}:${textMainBase.secondEnd}`;
   const dateData = CountDown(dayOut);
   const innerClasses = classNames("signUpForm-inner");
   const [disabled, setDisabled] = useState(false);
