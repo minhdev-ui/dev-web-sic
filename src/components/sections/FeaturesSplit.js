@@ -4,7 +4,7 @@ import { SectionSplitProps } from "../../utils/SectionProps";
 import SectionHeader from "./partials/SectionHeader";
 import "./../../assets/css/style.css";
 import "react-slideshow-image/dist/styles.css";
-import { Zoom, Slide } from "react-slideshow-image";
+import { Slide } from "react-slideshow-image";
 import events from "./event/ImagesData";
 
 const propTypes = {
