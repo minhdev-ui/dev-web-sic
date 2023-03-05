@@ -30,18 +30,16 @@ const Hero = ({
   const [videoModalActive, setVideomodalactive] = useState(false);
   const [showSignUpForm, setShowSignUpForm] = useState(false);
 
-  const handleSignUp = () => {
-    setShowSignUpForm(!showSignUpForm);
-  };
-
   const openModal = (e) => {
-    e.preventDefault();
-    setVideomodalactive(true);
+    // e.preventDefault();
+    // setVideomodalactive(true);
+    setShowSignUpForm(true);
   };
 
   const closeModal = (e) => {
-    e.preventDefault();
-    setVideomodalactive(false);
+    // e.preventDefault();
+    // setVideomodalactive(false);
+    setShowSignUpForm(false);
   };
 
   const outerClasses = classNames(
@@ -59,15 +57,9 @@ const Hero = ({
     bottomDivider && "has-bottom-divider"
   );
 
-  window.addEventListener("keyup", function (e) {
-    if (e.key === "Escape") {
-      setShowSignUpForm(false);
-    }
-  });
-
   return (
     <section {...props} className={outerClasses}>
-      {showSignUpForm && <SignUpForm stateFunc={handleSignUp}></SignUpForm>}
+      <SignUpForm closeModal={closeModal} open={showSignUpForm}></SignUpForm>
       <div className="container-sm">
         <div className={innerClasses}>
           <div className="hero-content">
@@ -87,7 +79,7 @@ const Hero = ({
               </p>
               <div className="reveal-from-bottom" data-reveal-delay="600">
                 <ButtonGroup>
-                  <span onClick={handleSignUp}>
+                  <span onClick={openModal}>
                     <Button color="primary" wideMobile className="hover-btn">
                       Đăng kí CTV
                     </Button>

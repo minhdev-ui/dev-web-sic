@@ -1,10 +1,10 @@
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import classNames from "classnames";
 import navLinks from "../../components/layout/partials/HeaderNav";
 import Cta from "../../components/sections/Cta";
 import Footer from "../../components/layout/Footer";
 import Slider from "react-slick";
-import './asset/style.scss';
+import "./asset/style.scss";
 import { MdOutlineDoubleArrow } from "react-icons/md";
 import SignUpForm from "../../components/elements/SignUpForm";
 import Circle from "../../components/elements/texture/Circle";
@@ -70,12 +70,16 @@ const Ban = ({ children, theme, className }) => {
   const classes = classNames(`Ban_section Ban_section-${theme}`);
   const [showSignUpForm, setShowSignUpForm] = useState(false);
 
-  const handleSignUp = () => {
-    setShowSignUpForm(!showSignUpForm);
+  const closeModal = () => {
+    setShowSignUpForm(false);
+  };
+
+  const openModal = () => {
+    setShowSignUpForm(true);
   };
   return (
     <div className={className}>
-      {showSignUpForm && <SignUpForm stateFunc={handleSignUp}></SignUpForm>}
+      <SignUpForm open={showSignUpForm} closeModal={closeModal} />
       <section className={classes}>
         <Header
           navPosition="right"
@@ -97,7 +101,7 @@ const Ban = ({ children, theme, className }) => {
                   <span>{children.registerMes}</span>
                 </div>
                 <div className="Ban-register-btn">
-                  <button className="btn_desc-ban" onClick={handleSignUp}>
+                  <button className="btn_desc-ban" onClick={openModal}>
                     {children.btn}
                   </button>
                   <div className="shine"></div>

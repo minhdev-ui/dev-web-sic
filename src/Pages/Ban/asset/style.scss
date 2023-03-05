@@ -1,5 +1,5 @@
 .Header-ban-pages {
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid #252c2c;
   background-color: var(--bg-nav-scroll) !important;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   &.site-header {
@@ -10,7 +10,7 @@
 .f_layout {
   display: flex;
   height: 600px;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid #252c2c;
   @media screen and (max-width: 850px) {
     flex-direction: column;
     height: auto;
@@ -21,11 +21,11 @@
     width: 64%;
     @media screen and (max-width: 850px) {
       width: 100% !important;
-      border-bottom: 1px solid #fff;
+      border-bottom: 1px solid #252c2c;
     }
     .f_layout-ff {
-      border-right: 1px solid #ccc;
-      border-bottom: 1px solid #ccc;
+      border-right: 1px solid #252c2c;
+      border-bottom: 1px solid #252c2c;
       height: 400px;
       text-align: center;
       position: relative;
@@ -38,7 +38,7 @@
         display: inline-block;
         span {
           padding: 5px 0;
-          border-bottom: 1px solid #fff;
+          border-bottom: 1px solid #252c2c;
           background: -webkit-linear-gradient(left, #f36430, #faa22f);
           -webkit-background-clip: text;
           background-clip: text;
@@ -71,7 +71,7 @@
       }
     }
     .f_layout-fs {
-      border-right: 1px solid #ccc;
+      border-right: 1px solid #252c2c;
       height: 200px;
       display: flex;
       justify-content: center;
@@ -144,7 +144,7 @@
   text-align: center;
   padding: 50px 8%;
   position: relative;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid #252c2c;
   h1 {
     padding-bottom: 40px;
   }
@@ -247,7 +247,7 @@
 .Slogan_page {
   font-size: 16px;
   text-align: center;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #252c2c;
   padding-bottom: 16px;
   margin: 0 5px;
   @media screen and (max-width: 800px) {

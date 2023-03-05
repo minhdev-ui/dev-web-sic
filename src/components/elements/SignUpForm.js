@@ -1,9 +1,9 @@
 import classNames from "classnames";
 import { Field, Form, Formik } from "formik";
-import { motion } from "framer-motion";
 import PropTypes from "prop-types";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { AiFillCloseCircle } from "react-icons/ai";
+
 import * as Yup from "yup";
 import CountDown from "../../utils/CountDown";
 import { SectionProps } from "../../utils/SectionProps";
@@ -16,12 +16,13 @@ import {
 } from "../sections/signUpForm/signUpFormQues";
 import "./../../assets/css/style.css";
 import createNotification from "./Nofication";
-// import db from "../../db.config";
 import emailjs from "@emailjs/browser";
 import axios from "axios";
 import config from "../../db.config";
 import DateTime from "./Date";
 import toast from "react-hot-toast";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
 const propTypes = {
   ...SectionProps.types,
   status: PropTypes.bool,
@@ -30,20 +31,6 @@ const propTypes = {
 const defaultProps = {
   ...SectionProps.defaults,
   status: false,
-};
-
-const signUpFormVariants = {
-  init: {
-    y: "-100vh",
-  },
-  ani: {
-    y: 0,
-    transition: {
-      type: "spring",
-      stiffness: 50,
-      duration: 0.2,
-    },
-  },
 };
 
 const SignUpForm = ({
@@ -55,12 +42,10 @@ const SignUpForm = ({
   hasBgColor,
   invertColor,
   status,
+  open,
+  closeModal,
   ...props
 }) => {
-  const outerClasses = classNames(
-    ` signUpForm
-    `
-  );
   // Định dạng mẫu: 2022-12-24T00:00:00
   const dayOut =
     textMainBase.yearEnd +
@@ -139,15 +124,27 @@ const SignUpForm = ({
   };
 
   return (
-    <section className={outerClasses}>
-      <motion.div
-        className="container"
-        style={{ position: "relative" }}
-        variants={signUpFormVariants}
-        initial="init"
-        animate="ani"
-      >
-        <span className="closeBtn" onClick={props.stateFunc}>
+    <Modal
+      open={open}
+      onClose={closeModal}
+      className="signUpForm"
+      sx={{
+        ".MuiBox-root": {
+          maxWidth: 1000,
+          width: "100%",
+          overflow: "scroll",
+          position: "fixed",
+          transform: "translate(-50%, -50%)",
+          top: "50%",
+          left: "50%",
+          height: "100vh",
+          maxHeight: 600,
+          borderRadius: 2,
+        },
+      }}
+    >
+      <Box>
+        <span className="closeBtn" onClick={closeModal}>
           <AiFillCloseCircle size="25px"></AiFillCloseCircle>
         </span>
         <div className={innerClasses}>
@@ -205,12 +202,11 @@ const SignUpForm = ({
                   .required()
                   .min(1, "Vui Lòng Chọn Trường Này")
                   .max(2, "Chỉ chọn tối đa 2 ban"),
-                gender: Yup.string()
-                  .required("Vui Lòng Chọn Trường Này"),
+                gender: Yup.string().required("Vui Lòng Chọn Trường Này"),
                 facebook: Yup.string().required("Vui Lòng Điền Trường Này"),
               })}
               onSubmit={(values) => {
-                handleSignUp(values)
+                handleSignUp(values);
                 props.stateFunc();
               }}
             >
@@ -229,13 +225,12 @@ const SignUpForm = ({
                           <label htmlFor={item.quesName} className="title">
                             {item.quesTitle}
                           </label>
-                          {errors[item.quesName] && touched[item.quesName] ? (
-                            <span className="errorMessage">
-                              {errors[item.quesName]}
-                            </span>
-                          ) : (
-                            ""
-                          )}
+                          {!!errors[item.quesName] &&
+                            !!touched[item.quesName] && (
+                              <span className="errorMessage">
+                                {errors[item.quesName]}
+                              </span>
+                            )}
                         </div>
                       ))}
                     </div>
@@ -247,7 +242,7 @@ const SignUpForm = ({
                       <label htmlFor={chooseOption.quesName} className="title">
                         {chooseOption.quesTitle}
                       </label>
-                      <div style={{ display: 'flex', gap: '10px' }}>
+                      <div style={{ display: "flex", gap: "10px" }}>
                         {chooseOption.ans.map((item) => (
                           <label style={{ color: "#000" }} key={item}>
                             <Field
@@ -262,10 +257,13 @@ const SignUpForm = ({
                           </label>
                         ))}
                       </div>
-                      {errors.gender && touched.gender ? (
-                        <span className="errorMessage" style={{width: '100%'}}>{errors.gender}</span>
-                      ) : (
-                        ""
+                      {!!errors.gender && !!touched.gender && (
+                        <span
+                          className="errorMessage"
+                          style={{ width: "100%" }}
+                        >
+                          {errors.gender}
+                        </span>
                       )}
                     </div>
                     <div
@@ -302,15 +300,13 @@ const SignUpForm = ({
                         className="message__text flex-child"
                         as="textarea"
                         name="message"
-                        placeholder="Câu trả lời của bạn . . ."
+                        placeholder=""
                         rows={3}
-                      ></Field>
+                        type="text"
+                      />
                     </div>
                     <div className="signUpForm__footer ">
-                      <button
-                        className="button button-sm"
-                        onClick={props.stateFunc}
-                      >
+                      <button className="button button-sm" onClick={closeModal}>
                         HUỶ
                       </button>
                       <button
@@ -327,8 +323,8 @@ const SignUpForm = ({
             </Formik>
           </div>
         </div>
-      </motion.div>
-    </section>
+      </Box>
+    </Modal>
   );
 };
 
