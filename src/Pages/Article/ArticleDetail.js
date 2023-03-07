@@ -13,6 +13,7 @@ import Cta from "../../components/sections/Cta";
 import { Skeleton } from "antd";
 import axios from "axios";
 import config from "../../db.config";
+import FacebookShare from "../../components/FacebookShare";
 const ArticleDetail = ({ type }) => {
   const { postID } = useParams();
   const [data, setData] = useState("");
@@ -47,7 +48,7 @@ const ArticleDetail = ({ type }) => {
             <div className="article-left">
               <img src={image} alt="" />
               <p>
-                <Markup content={text} className='text-article' />
+                <Markup content={text} className="text-article" />
               </p>
               {tags && (
                 <div className="article-tags">
@@ -69,7 +70,7 @@ const ArticleDetail = ({ type }) => {
                 <div className="article-item primary">
                   <BsFillCalendarFill></BsFillCalendarFill>
                 </div>
-                {createdAt ? createdAt.slice(0,10) : ""}
+                {createdAt ? createdAt.slice(0, 10) : ""}
               </div>
               <div className="article-info">
                 <div className="article-item primary">
@@ -78,6 +79,7 @@ const ArticleDetail = ({ type }) => {
                 {author}
               </div>
               <hr />
+              <FacebookShare data={data} />
             </div>
           </div>
         </div>
